@@ -1,0 +1,11 @@
+.item-add-form{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.item-add-form button {
+    margin-right: 5px;
+    width: 150px;
+    /* text-align: center; */
+}

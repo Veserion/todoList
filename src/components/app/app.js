@@ -10,7 +10,7 @@ import "./app.css";
 
 @inject('taskStore')
 @observer
-export default class App extends React.Component {
+class App extends React.Component {
   defId = 100;
   defDataId = 100;
 
@@ -142,3 +142,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default App

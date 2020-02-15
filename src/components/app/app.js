@@ -6,6 +6,7 @@ import TodoList from "../todo-list/todo-list";
 import ItemStatusFilter from "../item-status-filter/item-status-filter";
 import ItemAddForm from "../item-add-form/item-add-form";
 import "./app.css";
+import {inject, observer} from "mobx-react";
 
 
 @inject('taskStore')

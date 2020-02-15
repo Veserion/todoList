@@ -1,4 +1,4 @@
-import { RootStore } from '@stores';
+import { RootStore } from './index';
 
 class SubStore {
     constructor(rootStore) {}

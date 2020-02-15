@@ -7,22 +7,14 @@ import ItemStatusFilter from "../item-status-filter/item-status-filter";
 import ItemAddForm from "../item-add-form/item-add-form";
 import "./app.css";
 
+
+@inject('taskStore')
+@observer
 export default class App extends React.Component {
   defId = 100;
   defDataId = 100;
 
-  data = [
-    this.createTodoItem("Drink Coffee"),
-    this.createTodoItem("Create app"),
-    this.createTodoItem("Drink more coffee")
-  ];
-
   state = {
-    todoData: [
-      this.createTodoItemInData("Drink Coffee"),
-      this.createTodoItemInData("Create app"),
-      this.createTodoItemInData("Drink more coffee")
-    ],
     term: ""
   };
 
@@ -44,29 +36,6 @@ export default class App extends React.Component {
     };
   }
 
-  deleteItem = id => {
-    this.setState(({ todoData }) => {
-      const idx = todoData.findIndex(el => el.id === id);
-      this.data = this.data.filter(item => !(item.id === id));
-      console.log(this.data);
-
-      const newArray = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
-      return {
-        todoData: newArray
-      };
-    });
-  };
-
-  addItem = text => {
-    const newItem = this.createTodoItem(text);
-    this.setState(({ todoData }) => {
-      const newArr = [...todoData, newItem];
-      this.data.push(newItem);
-      return {
-        todoData: newArr
-      };
-    });
-  };
 
   onToggleDone = id => {
     this.setState(({ todoData }) => {

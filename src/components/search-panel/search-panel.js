@@ -1,17 +1,12 @@
 import React from "react";
 import "./search-panel.css";
+import {inject, observer} from "mobx-react";
 
-export default class SearchPanel extends React.Component {
-  state = {
-    term: ""
+export default class _SearchPanel extends React.Component {
+
+  onSearchChange = ({target: {value: term}}) => {
+
   };
-
-  onSearchChange = e => {
-    const term = e.target.value;
-    this.setState({ term });
-    this.props.onSearchChange(term);
-  };
-
   render() {
     return (
       <input

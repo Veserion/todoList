@@ -1,57 +1,47 @@
 import React from "react";
 import "./todo-list-item.css";
+import {inject, observer} from "mobx-react";
 
-export default class TodoListItem extends React.Component {
+class _TodoListItem extends React.Component {
 
-  onLabelClick = () => {
-    this.setState(state => {
-      return {
-        done: !state.done
-      };
-    });
-  };
 
-  onMarkImportant = () => {
-    this.setState(state => {
-      return {
-        important: !state.important
-      };
-    });
-  };
+    render() {
+        const {label, done, important, index} = this.props;
 
-  render() {
-    const { label, onDeleted, onToggleDone, onToggleImportant, done, important } = this.props;
-    // const { done, important } = this.state;
+        let classNames = "todo-list-item ";
+        if (done) {
+            classNames += " done";
+        }
 
-    let classNames = "todo-list-item ";
-    if (done) {
-      classNames += " done";
-    }
+        if (important) {
+            classNames += " important";
+        }
 
-    if (important) {
-      classNames += " important";
-    }
+        const {deleteItem, onToggleDone, onToggleImportant} = this.props.taskStore;
 
-    return (
-      <span className={classNames}>
-        <span className="todo-list-item-label" onClick={onToggleDone}>
+        return (
+            <span className={classNames}>
+        <span className="todo-list-item-label" onClick={() => onToggleDone(index)}>
           {label}
         </span>
         <span>
           <button
-            type="button"
-            className="btn btn-outline-success btn-sm"
-            onClick={onToggleImportant}
+              type="button"
+              className="btn btn-outline-success btn-sm"
+              onClick={() => onToggleImportant(index)}
           >
-            <i className="fa fa-exclamation" />
+            <i className="fa fa-exclamation"/>
           </button>
 
           <button type="button" className="btn btn-outline-danger btn-sm"
-          onClick = {onDeleted}>
-            <i className="fa fa-trash-o" />
+                  onClick={() => deleteItem(index)}>
+            <i className="fa fa-trash-o"/>
           </button>
         </span>
       </span>
-    );
-  }
+        );
+    }
 }
+const TodoListItem = inject("taskStore")(observer(_TodoListItem))
+
+export default TodoListItem

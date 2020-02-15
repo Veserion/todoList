@@ -1,46 +1,45 @@
-import { SubStore } from "./SubStore";
-import { observable, action } from "mobx";
+import {SubStore} from "./SubStore";
+import {observable, action, decorate} from "mobx";
 
-const initState = {
-  todoData: [
-    {
-      label: "Drink Coffee",
-      important: false,
-      done: false
-    },
-    {
-      label: "Create app",
-      important: false,
-      done: false
-    },
-    {
-      label: "Drink more coffee",
-      important: false,
-      done: false
-    }
-  ]
-};
 
 export class TaskStore extends SubStore {
-  @observable todoData = [];
+    todoData = [];
 
-  @action addItem = label =>
-    this.todoData.push({
-      label,
-      important: false,
-      done: false
-    });
+    addItem = label =>
+        this.todoData.push({
+            label,
+            important: false,
+            done: false
+        });
 
-  @action deleteItem = i => this.todoData.splice(i, 1);
-
-  constructor(rootStore /* initState */) {
-    super(rootStore);
-    if (initState) {
-      if (initState.todoData) {
-        this.todoData = initState.todoData;
-      }
+    deleteItem = i => {
+        this.todoData.splice(i, 1);
+        console.log(this.todoData)
     }
-  }
+    onToggleImportant = (i) =>
+        this.todoData[i].important = !this.todoData[i].important
 
-  serialize = () => {};
+    onToggleDone = (i) =>
+        this.todoData[i].done = !this.todoData[i].done
+
+    constructor(rootStore, initState) {
+        super(rootStore);
+        if (initState) {
+            if (initState.todoData) {
+                this.todoData = initState.todoData;
+            }
+        }
+    }
+
+    serialize = () => ({
+        todoData: this.todoData
+    });
 }
+
+decorate(TaskStore, {
+    todoData: observable,
+    addItem: action,
+    deleteItem: action,
+    onToggleImportant: action,
+    onToggleDone: action,
+})
